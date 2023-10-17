@@ -1,5 +1,5 @@
 import "./header.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 
 import logo from "../../assets/images/eco-logo.png";
@@ -8,28 +8,39 @@ import { FiShoppingBag } from "react-icons/fi";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
-  const headerRef = useRef(null)
+  const headerRef = useRef(null);
+  const navigate = useNavigate();
+
+  const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 
   const stickyHeaderFunction = () => {
-    window.addEventListener('scroll', () => {
-      if(document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-        headerRef.current.classList.add('sticky__header')
+    window.addEventListener("scroll", () => {
+      if (
+        document.body.scrollTop > 80 ||
+        document.documentElement.scrollTop > 80
+      ) {
+        headerRef.current.classList.add("sticky__header");
       } else {
-        headerRef.current.classList.remove('sticky__header')
+        headerRef.current.classList.remove("sticky__header");
       }
-    })
-  }
+    });
+  };
 
   useEffect(() => {
-    stickyHeaderFunction()
+    stickyHeaderFunction();
 
-    return () => window.removeEventListener('scroll', stickyHeaderFunction)
-  })
+    return () => window.removeEventListener("scroll", stickyHeaderFunction);
+  });
 
   const handleClick = () => setOpen(!open);
+
+  const navigateToCart = () => {
+    navigate("/cart");
+  };
   return (
     <div className="header" ref={headerRef}>
       <nav className="nav__wrapper">
@@ -67,9 +78,9 @@ const Header = () => {
             <AiOutlineHeart size={22} />
             <span className="badge">1</span>
           </span>
-          <span className="cart__icon">
+          <span className="cart__icon" onClick={navigateToCart}>
             <FiShoppingBag size={22} />
-            <span className="badge">1</span>
+            <span className="badge">{totalQuantity}</span>
           </span>
           <span>
             <motion.img

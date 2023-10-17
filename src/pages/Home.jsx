@@ -52,7 +52,7 @@ const Home = () => {
   }, []);
   return (
     <Helmet title={"Home"}>
-      <section className="hero__section w-full flex items-center justify-center">
+      <section className="hero__section w-full ">
         <div className="flex items-center justify-center">
           <div className="grid md:grid-cols-2 grid-cols-1 gap-8">
             <div className="col">
@@ -81,23 +81,21 @@ const Home = () => {
       <Services />
       <section className="trending__products flex items-center justify-center">
         <div className="container">
-          <div className="row">
-            <div className="col text-center md:mb-6 mb-8">
-              <h2 className="section__title">Trending Products</h2>
-            </div>
-            <ProductList data={trendingProducts} />
+          <div className="col text-center md:mb-6 mb-8">
+            <h2 className="section__title">Trending Products</h2>
           </div>
+
+          <ProductList data={trendingProducts} />
         </div>
       </section>
 
       <section className="best__sales flex items-center justify-center">
         <div className="container">
-          <div className="row">
-            <div className="col text-center md:mb-6 mb-8">
-              <h2 className="section__title">Best Sales</h2>
-            </div>
-            <ProductList data={bestSalesProducts} />
+          <div className="col text-center md:mb-6 mb-8">
+            <h2 className="section__title">Best Sales Products</h2>
           </div>
+
+          <ProductList data={bestSalesProducts} />
         </div>
       </section>
 

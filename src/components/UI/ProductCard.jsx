@@ -3,8 +3,24 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { motion } from "framer-motion";
 import "../../styles/product-card.css";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { cartActions } from "../../redux/slices/cartSlice";
 
 const ProductCard = ({ item }) => {
+  const dispatch = useDispatch();
+  const addToCart = () => {
+    dispatch(
+      cartActions.addItem({
+        id: item.id,
+        productName: item.productName,
+        price: item.price,
+        imgUrl: item.imgUrl,
+      })
+    );
+
+    toast.success("Product added successfully");
+  };
   return (
     <div className="mb-2">
       <div className="product__item">
@@ -19,7 +35,7 @@ const ProductCard = ({ item }) => {
         </div>
         <div className="product__card-bottom flex items-center justify-between p-2">
           <span className="price">${item.price}</span>
-          <motion.span whileTap={{ scale: 1.1 }}>
+          <motion.span whileTap={{ scale: 1.1 }} onClick={addToCart}>
             <AiOutlinePlus className="text-[1.2rem] p-[5px] bg-[var(--primary-color)] text-white rounded-full" />
           </motion.span>
         </div>

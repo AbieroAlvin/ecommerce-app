@@ -27,5 +27,5 @@
 }
 
 .footer__copy {
-  @apply text-center w-full col-span-4 text-sm text-gray-300 mt-[30px];
+  @apply text-center w-full  text-sm text-gray-300 mt-[30px];
 }
