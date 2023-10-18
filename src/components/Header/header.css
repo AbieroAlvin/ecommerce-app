@@ -40,8 +40,21 @@
   @apply absolute top-[-20%] right-[-20%] bg-[var(--primary-color)] text-white rounded-full text-[0.8rem] font-[600] z-10 p-2 w-[15px] h-[15px] flex items-center justify-center;
 }
 
-.nav__icons span img {
-  @apply w-[30px] h-[30px];
+.nav__icons .profile img {
+  @apply w-[30px] h-[30px] cursor-pointer rounded-full;
+}
+
+.nav__icons .profile {
+  @apply relative z-[9];
+}
+
+.nav__icons .profile .profile__actions {
+  display: none;
+  @apply absolute top-[150%] left-0 w-[150px] z-10 p-[15px] flex items-center flex-col bg-[var(--card-bg-01)] leading-[30px] cursor-pointer;
+}
+
+.show__profileActions {
+  @apply block;
 }
 
 .nav__active {
@@ -57,5 +70,5 @@
 }
 
 .sticky__header {
-  @apply w-full h-[70px] leading-[70px] sticky top-0 left-0 z-[999] shadow-lg bg-white
+  @apply w-full h-[70px] leading-[70px] sticky top-0 left-0 z-[999] shadow-lg bg-white;
 }

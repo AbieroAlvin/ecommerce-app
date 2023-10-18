@@ -9,11 +9,18 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
+import useAuth from "../../custom-hooks/useAuth";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
   const headerRef = useRef(null);
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
+
+  const profileActionRef = useRef(null);
 
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 
@@ -40,6 +47,20 @@ const Header = () => {
 
   const navigateToCart = () => {
     navigate("/cart");
+  };
+
+  const toggleProfileActions = () =>
+    profileActionRef.current.classList.toggle("show__profileActions");
+
+  const logout = () => {
+    signOut(auth)
+      .then(() => {
+        toast.success("Logged out");
+        navigate("/");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
   return (
     <div className="header" ref={headerRef}>
@@ -82,13 +103,28 @@ const Header = () => {
             <FiShoppingBag size={22} />
             <span className="badge">{totalQuantity}</span>
           </span>
-          <span>
+          <div className="profile">
             <motion.img
               whileTap={{ scale: 1.2 }}
-              src={userIcon}
+              src={currentUser ? currentUser.photoURL : userIcon}
               alt="userIcon"
+              onClick={toggleProfileActions}
             />
-          </span>
+            <div
+              className="profile__actions"
+              ref={profileActionRef}
+              onClick={toggleProfileActions}
+            >
+              {currentUser ? (
+                <span onClick={logout}>Logout</span>
+              ) : (
+                <div className="flex items-center justify-center gap-3 flex-col">
+                  <Link to="/signup">Signup</Link>
+                  <Link to="/login">Login</Link>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* mobile menu */}
